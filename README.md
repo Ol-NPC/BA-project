@@ -22,7 +22,7 @@ cd infra
 cp .env.example .env
 # edit .env
 docker compose -f docker-compose.yml.example up -d --build
-curl http://127.0.0.1:8000/ping
+curl http://127.0.0.1:8001/ping
 
 ---
 
