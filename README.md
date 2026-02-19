@@ -1,42 +1,61 @@
 # BA-project
 
-Backend API for beauty academy lead collection.
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-backend-success)
+![Docker](https://img.shields.io/badge/Docker-Compose-informational)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-informational)
+![Nginx](https://img.shields.io/badge/Nginx-reverse--proxy-lightgrey)
 
-## Features
-- FastAPI + PostgreSQL
-- Docker Compose deployment
-- Nginx reverse proxy
-- Swagger/OpenAPI protected with HTTP Basic Auth
-- Public endpoints for lead creation
-
-## Endpoints
-- `GET /ping` — health check
-- `POST /leads` — create lead
-- `GET /leads` — list leads
-- `GET /leads/{lead_id}` — get lead by id
-- `GET /docs`, `/openapi.json`, `/redoc` — protected (Basic Auth)
-
-## Local run (example)
-```bash
-cd infra
-cp .env.example .env
-# edit .env
-docker compose -f docker-compose.yml.example up -d --build
-curl http://127.0.0.1:8001/ping
+Backend service for lead collection with REST API, containerized deployment, and protected API documentation.
 
 ---
 
-## Proof of Deployment
+## Stack
 
-### Docker Containers
-![Docker](docs/img/docker_ps.png)
+- Python 3.11
+- FastAPI + Uvicorn
+- PostgreSQL 16
+- Docker & Docker Compose
+- Nginx reverse proxy
+- OpenAPI / Swagger (HTTP Basic Auth)
 
-### Healthcheck (200 OK)
-![Health](docs/img/health_200.png)
+---
 
-### Protected OpenAPI/Swagger (401 Unauthorized)
-![Swagger](docs/img/swagger_401.png)
+## Architecture
 
-### Database Records
-![Database](docs/img/db_records.png)
+Data flow:
+
+Client  
+↓  
+Nginx (reverse proxy)  
+↓  
+FastAPI application (Docker container)  
+↓  
+PostgreSQL (Docker volume)
+
+- Database is isolated inside Docker network
+- Secrets stored in `.env`
+- API documentation protected via HTTP Basic Auth
+
+---
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|------------|
+| GET | `/ping` | Health check |
+| POST | `/leads` | Create lead |
+| GET | `/leads` | List leads |
+| GET | `/leads/{lead_id}` | Get lead by ID |
+| GET | `/docs` | Swagger UI (protected) |
+
+---
+
+## Project Structure
+backend/ → FastAPI application
+infra/ → Docker Compose configuration & Nginx config
+docs/ → Architecture documentation & deployment evidence
+
+
+curl http://localhost:8001/ping
 
