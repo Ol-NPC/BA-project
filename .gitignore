@@ -1,0 +1,25 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+.htpasswd
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Logs / dumps
+*.log
+*.sql
+*.dump
+

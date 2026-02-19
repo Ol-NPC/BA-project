@@ -1,0 +1,29 @@
+services:
+  api:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: ba_api
+    env_file:
+      - .env
+    ports:
+      - "8001:80"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    container_name: ba_db
+    environment:
+      POSTGRES_DB: ba_db
+      POSTGRES_USER: ba_user
+      POSTGRES_PASSWORD: CHANGE_ME
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    # IMPORTANT: no ports section here (db is internal only)
+
+volumes:
+  postgres_data:
+

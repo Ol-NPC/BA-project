@@ -1,0 +1,26 @@
+server {
+    listen 80;
+    server_name example.com;
+
+    # Landing is not included in this repository.
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Optional: healthcheck
+    location /api/ping {
+        proxy_pass http://127.0.0.1:8000/ping;
+        access_log off;
+    }
+
+    # Swagger is protected by FastAPI Basic Auth
+    location /docs { proxy_pass http://127.0.0.1:8000/docs; }
+    location /openapi.json { proxy_pass http://127.0.0.1:8000/openapi.json; }
+    location /redoc { proxy_pass http://127.0.0.1:8000/redoc; }
+}
+
